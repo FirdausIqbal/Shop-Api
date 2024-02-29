@@ -1,0 +1,41 @@
+//tabel carts
+CREATE TABLE carts (
+	id SERIAL PRIMARY KEY,
+	userid INT REFERENCES users(id),
+	created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
+
+//tabel product_cart
+CREATE TABLE product_cart(
+	id SERIAL PRIMARY KEY,
+	cart_id INT REFERENCES carts(id),
+	product_id INT REFERENCES products(id),
+	quantity INT DEFAULT 1
+	
+);
+
+//tabel orders
+CREATE TABLE orders (
+	id SERIAL PRIMARY KEY NOT NULL,
+	user_id INT REFERENCES users(id),
+	cart_id INT REFERENCES carts(id),
+	status TEXT DEFAULT 'Pending',
+	time_order TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+)
+
+// Pelajaran query data 
+ SELECT u.username, 
+	o.cart_id, 
+	SUM(pc.quantity) AS jumlah_order, // menjumlahkan semua hasil tangkapan data dari pc.quantity dan ditempatkan di jumlah_order
+	STRING_AGG(p.prod_name, ', ') AS products, // Agregasi untuk mendapatkan semua nilai yg terpilih lalu menempatkan nya pada satu column yg sudah diubah menjadi string
+	SUM(p.price * pc.quantity) AS total, // menjumlahkan data p.price di kali pc.quantity lalu data tsb dijumlahkan keseluruhan 
+	o.status, 
+	o.time_order
+	FROM orders o
+	JOIN carts c ON o.id = c.id
+	JOIN users u ON u.id = c.userid
+	JOIN product_cart pc ON pc.cart_id = c.id
+	JOIN products p ON p.id = pc.product_id
+	WHERE o.id = $1 //jika menggunakan GROUP letakkan kondisi WHERE  di atas group agar tidak error
+	GROUP BY u.username, o.cart_id, o.status, o.time_order; // setiap data dikelompokan menjadi satu baris berdasarkan column disamping *apabila menggunakan proses SUM dan STRING_AGG tidak perlu di masukkan kedalam GROUP
