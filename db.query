@@ -1,4 +1,25 @@
-//tabel carts
+//table users
+CREATE TABLE users(
+	id SERIAL PRIMARY KEY,
+	username VARCHAR(10) UNIQUE NOT NULL,
+	password VARCHAR UNIQUE NOT NULL,
+	email TEXT,
+	createdat TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	isadmin boolean DEFAULT false
+)
+
+//table products
+CREATE TABLE products(
+	id SERIAL PRIMARY KEY,
+	prod_name TEXT NOT NULL,
+	prod_desc TEXT,
+	prod_image BYTEA,
+	price MONEY NOT NULL,
+	quantity INT,
+	category TEXT[]
+)
+
+//table carts
 CREATE TABLE carts (
 	id SERIAL PRIMARY KEY,
 	userid INT REFERENCES users(id),
@@ -6,7 +27,7 @@ CREATE TABLE carts (
 );
 
 
-//tabel product_cart
+//table product_cart
 CREATE TABLE product_cart(
 	id SERIAL PRIMARY KEY,
 	cart_id INT REFERENCES carts(id),
@@ -15,7 +36,7 @@ CREATE TABLE product_cart(
 	
 );
 
-//tabel orders
+//table orders
 CREATE TABLE orders (
 	id SERIAL PRIMARY KEY NOT NULL,
 	user_id INT REFERENCES users(id),

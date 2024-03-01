@@ -4,7 +4,7 @@
 DB_USER = //database username
 DB_PW = //database password *postgre
 DB_HOST = //database host
-DB_PORT = //database port
+DB_PORT = //database port *postgre default is 5432
 DB_NAME = //database name
 
 AES_KEY = //your crypt key
