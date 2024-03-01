@@ -1,0 +1,11 @@
+// Create .env file on your local
+
+// template data env 
+DB_USER = //database username
+DB_PW = //database password *postgre
+DB_HOST = //database host
+DB_PORT = //database port
+DB_NAME = //database name
+
+AES_KEY = //your crypt key
+JWT_KEY = //your jsonwebtoken key
