@@ -23,7 +23,7 @@ const stringData = (data)=>{
 //end Function
 
 // Buat Get All Product
-router.get("/all", verifyAdmin, async (req,res)=>{
+router.get("/all", async (req,res)=>{
     try {
         const result = await db.query(`SELECT * FROM products`);
         res.status(200).json(result.rows);

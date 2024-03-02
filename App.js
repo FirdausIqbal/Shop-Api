@@ -7,14 +7,16 @@ import Auth from './routes/auth.js'
 import Products from './routes/product.js'
 import Cart from './routes/cart.js'
 import Orders from './routes/order.js'
+import cors from 'cors'
 
 
 
 const app = express();
-const port = 3000;
+const port = 3001;
 
 dotenv.config();
 db.connect();
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
